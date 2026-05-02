@@ -504,58 +504,94 @@ export default function LogisticsPage() {
       {isModalOpen && (
         <div className="fixed inset-0 z-[80] flex items-center justify-center bg-black/70 px-4">
           <button type="button" aria-label="Close modal backdrop" className="absolute inset-0" onClick={closeModal} />
-          <div className="relative w-full max-w-lg rounded-3xl border border-white/10 bg-gradient-to-b from-[#1d1f1f] to-[#141616] p-6 shadow-2xl shadow-black/50">
+          <div className="relative max-h-[min(90vh,760px)] w-full max-w-xl overflow-y-auto rounded-3xl border border-white/10 bg-gradient-to-b from-[#1d1f1f] to-[#141616] p-6 pt-14 shadow-2xl shadow-black/50 sm:p-8 sm:pt-14">
             <button
               type="button"
               onClick={closeModal}
-              className="absolute right-4 top-4 rounded-full border border-white/20 px-3 py-1 text-xs text-white/75 transition-colors hover:text-white"
+              className="absolute right-4 top-4 z-10 rounded-full border border-white/20 bg-[#1d1f1f]/80 px-3 py-1.5 text-xs font-medium text-white/80 backdrop-blur-sm transition-colors hover:border-white/35 hover:text-white"
             >
               Close
             </button>
-            <h3 className={cn(headingFont.className, "text-2xl font-semibold text-white")}>Apply Now</h3>
-            <p className="mt-2 text-sm text-gray-300">Complete the form and our team will call you back shortly.</p>
-            <form className="mt-5 space-y-3" onSubmit={handleSubmit}>
+            <h3 className={cn(headingFont.className, "pr-16 text-2xl font-semibold text-white sm:text-[1.65rem]")}>Apply Now</h3>
+            <p className="mt-2 text-sm leading-relaxed text-gray-300">
+              Complete the form and our team will call you back shortly.
+            </p>
+            <form className="mt-6 grid gap-3 sm:gap-4" onSubmit={handleSubmit}>
               <input
                 required
+                name="name"
                 type="text"
+                autoComplete="name"
                 placeholder="Name"
-                className="w-full rounded-xl border border-white/10 bg-[#282a2b] px-3 py-2.5 text-sm text-white placeholder:text-gray-400 outline-none transition-colors focus:border-orange-400"
+                className="min-h-[44px] w-full rounded-xl border border-white/10 bg-[#282a2b] px-3.5 py-2.5 text-sm text-white shadow-inner shadow-black/20 placeholder:text-gray-400 outline-none ring-orange-400/0 transition-all focus:border-orange-400/70 focus:ring-2 focus:ring-orange-400/25"
               />
-              <input
+              <div className="grid grid-cols-2 gap-2 sm:gap-4">
+                <input
+                  required
+                  name="contact"
+                  type="tel"
+                  autoComplete="tel"
+                  placeholder="Contact No."
+                  className="min-h-[44px] min-w-0 w-full rounded-xl border border-white/10 bg-[#282a2b] px-2 py-2.5 text-sm text-white shadow-inner shadow-black/20 placeholder:text-gray-400 outline-none ring-orange-400/0 transition-all focus:border-orange-400/70 focus:ring-2 focus:ring-orange-400/25 sm:px-3.5"
+                />
+                <input
+                  required
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  placeholder="Email"
+                  className="min-h-[44px] min-w-0 w-full rounded-xl border border-white/10 bg-[#282a2b] px-2 py-2.5 text-sm text-white shadow-inner shadow-black/20 placeholder:text-gray-400 outline-none ring-orange-400/0 transition-all focus:border-orange-400/70 focus:ring-2 focus:ring-orange-400/25 sm:px-3.5"
+                />
+              </div>
+              <textarea
                 required
-                type="tel"
-                placeholder="Phone"
-                className="w-full rounded-xl border border-white/10 bg-[#282a2b] px-3 py-2.5 text-sm text-white placeholder:text-gray-400 outline-none transition-colors focus:border-orange-400"
+                name="address"
+                autoComplete="street-address"
+                rows={3}
+                placeholder="Address"
+                className="min-h-[88px] w-full resize-y rounded-xl border border-white/10 bg-[#282a2b] px-3.5 py-2.5 text-sm text-white shadow-inner shadow-black/20 placeholder:text-gray-400 outline-none ring-orange-400/0 transition-all focus:border-orange-400/70 focus:ring-2 focus:ring-orange-400/25"
               />
-              <input
-                required
-                type="text"
-                placeholder="City"
-                className="w-full rounded-xl border border-white/10 bg-[#282a2b] px-3 py-2.5 text-sm text-white placeholder:text-gray-400 outline-none transition-colors focus:border-orange-400"
-              />
-              <select
-                required
-                defaultValue=""
-                className="w-full rounded-xl border border-white/10 bg-[#282a2b] px-3 py-2.5 text-sm text-white outline-none transition-colors focus:border-orange-400"
-              >
-                <option value="" disabled>
-                  Business type
-                </option>
-                <option>Booking Point</option>
-                <option>Mini Hub</option>
-                <option>Master Franchise</option>
-              </select>
-              <input
-                required
-                type="text"
-                placeholder="Investment budget"
-                className="w-full rounded-xl border border-white/10 bg-[#282a2b] px-3 py-2.5 text-sm text-white placeholder:text-gray-400 outline-none transition-colors focus:border-orange-400"
+              <div className="grid grid-cols-3 gap-2 sm:gap-4">
+                <input
+                  required
+                  name="state"
+                  type="text"
+                  autoComplete="address-level1"
+                  placeholder="State"
+                  className="min-h-[44px] min-w-0 w-full rounded-xl border border-white/10 bg-[#282a2b] px-2 py-2.5 text-sm text-white shadow-inner shadow-black/20 placeholder:text-gray-400 outline-none ring-orange-400/0 transition-all focus:border-orange-400/70 focus:ring-2 focus:ring-orange-400/25 sm:px-3.5"
+                />
+                <input
+                  required
+                  name="city"
+                  type="text"
+                  autoComplete="address-level2"
+                  placeholder="City"
+                  className="min-h-[44px] min-w-0 w-full rounded-xl border border-white/10 bg-[#282a2b] px-2 py-2.5 text-sm text-white shadow-inner shadow-black/20 placeholder:text-gray-400 outline-none ring-orange-400/0 transition-all focus:border-orange-400/70 focus:ring-2 focus:ring-orange-400/25 sm:px-3.5"
+                />
+                <input
+                  required
+                  name="pincode"
+                  type="text"
+                  inputMode="numeric"
+                  autoComplete="postal-code"
+                  placeholder="Pincode"
+                  pattern="[0-9]{6}"
+                  maxLength={6}
+                  title="Enter a 6-digit pincode"
+                  className="min-h-[44px] min-w-0 w-full rounded-xl border border-white/10 bg-[#282a2b] px-2 py-2.5 text-sm text-white shadow-inner shadow-black/20 placeholder:text-gray-400 outline-none ring-orange-400/0 transition-all focus:border-orange-400/70 focus:ring-2 focus:ring-orange-400/25 sm:px-3.5"
+                />
+              </div>
+              <textarea
+                name="message"
+                rows={3}
+                placeholder="Message (optional)"
+                className="min-h-[88px] w-full resize-y rounded-xl border border-white/10 bg-[#282a2b] px-3.5 py-2.5 text-sm text-white shadow-inner shadow-black/20 placeholder:text-gray-400 outline-none ring-orange-400/0 transition-all focus:border-orange-400/70 focus:ring-2 focus:ring-orange-400/25"
               />
               <button
                 type="submit"
                 className={cn(
                   labelFont.className,
-                  "w-full rounded-xl bg-orange-500 px-5 py-3 text-sm font-semibold text-white transition-all duration-300 hover:scale-[1.01] hover:bg-orange-400"
+                  "mt-1 min-h-[48px] w-full rounded-xl bg-orange-500 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-orange-500/20 transition-all duration-300 hover:bg-orange-400 hover:shadow-orange-500/30 active:scale-[0.99]"
                 )}
               >
                 {isSubmitted ? "Application Submitted!" : "Submit Application"}

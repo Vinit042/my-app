@@ -81,36 +81,6 @@ export function ContactSection() {
           </div>
           <div className="space-y-1.5">
             <label className="text-xs font-medium text-slate-700 dark:text-slate-200">
-              Select Service<span className="text-red-500">*</span>
-            </label>
-            <select required className={cn(fieldBase, "appearance-none")}>
-              <option value="">Select Service*</option>
-              <option>Own Courier Point</option>
-              <option>Logistics</option>
-              <option>Solar Energy</option>
-              <option>EV Charging</option>
-              <option>B2B</option>
-              <option>Financial Services</option>
-              <option>Technology Services</option>
-              <option>Bulk SMS</option>
-            </select>
-          </div>
-
-          <div className="space-y-1.5">
-            <label className="text-xs font-medium text-slate-700 dark:text-slate-200">
-              Select Opportunity<span className="text-red-500">*</span>
-            </label>
-            <select required className={cn(fieldBase, "appearance-none")}>
-              <option value="">Select Opportunity*</option>
-              <option>Become A Store Franchise</option>
-              <option>Become A Distributor</option>
-              <option>Become A Master Distributor</option>
-              <option>Become A White Label</option>
-              <option>Become A Channel Partner</option>
-            </select>
-          </div>
-          <div className="space-y-1.5">
-            <label className="text-xs font-medium text-slate-700 dark:text-slate-200">
               State<span className="text-red-500">*</span>
             </label>
             <input type="text" required placeholder="State*" className={fieldBase} />
@@ -121,6 +91,53 @@ export function ContactSection() {
               Pincode<span className="text-red-500">*</span>
             </label>
             <input type="text" required placeholder="Pincode*" className={fieldBase} />
+          </div>
+          <div className="space-y-1.5">
+            <label className="text-xs font-medium text-slate-700 dark:text-slate-200">
+              City<span className="text-red-500">*</span>
+            </label>
+            <input type="text" required placeholder="City*" className={fieldBase} />
+          </div>
+
+          <div className="space-y-1.5 md:col-span-2">
+            <label className="text-xs font-medium text-slate-700 dark:text-slate-200">
+              Address<span className="text-red-500">*</span>
+            </label>
+            <textarea
+              name="address"
+              required
+              rows={3}
+              placeholder="Address*"
+              autoComplete="street-address"
+              className={cn(fieldBase, "resize-y")}
+            />
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="text-xs font-medium text-slate-700 dark:text-slate-200">
+              Select Service<span className="text-red-500">*</span>
+            </label>
+            <select required className={cn(fieldBase, "appearance-none")}>
+              <option value="">Select Service</option>
+              <option>Logistics</option>
+            </select>
+          </div>
+          <div className="space-y-1.5">
+            <label className="text-xs font-medium text-slate-700 dark:text-slate-200">
+              Select Opportunity<span className="text-red-500">*</span>
+            </label>
+            <select required className={cn(fieldBase, "appearance-none")}>
+              <option value="">Select Opportunity</option>
+              <option>Booking Point</option>
+              <option>Min Hub</option>
+              <option>EKART Franchise</option>
+              <option>SHADOWFAX Franchise</option>
+              <option>DELHIVERY Franchise</option>
+              <option>One Pincode Franchise</option>
+              <option>Master Franchise (3 Pincodes)</option>
+              <option>Mini District Franchise (5 Pincodes)</option>
+              <option>District Model Franchise (10 Pincodes)</option>
+            </select>
           </div>
         </div>
 
