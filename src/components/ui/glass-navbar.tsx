@@ -129,7 +129,7 @@ export function GlassNavbar({ activeHref, className, whiteText, variant = "defau
             <div className="hidden items-center gap-1.5 sm:flex">
               <SocialIcon Icon={Facebook} label="Facebook" iconClassName="text-blue-500" />
               <SocialIcon Icon={Instagram} label="Instagram" iconClassName="text-pink-500" />
-              <SocialIcon Icon={Twitter} label="Twitter" iconClassName="text-slate-700" />
+              <SocialIcon Icon={Twitter} label="Twitter" iconClassName="text-sky-600 dark:text-sky-300" />
             </div>
             <button
               type="button"
@@ -356,9 +356,13 @@ export function GlassNavbar({ activeHref, className, whiteText, variant = "defau
             </a>
 
             <div className="flex items-center gap-1.5 sm:gap-2">
-              <SocialIcon Icon={Facebook} label="Facebook" iconClassName="text-blue-500 dark:text-blue-400" whiteText={whiteText} />
-              <SocialIcon Icon={Instagram} label="Instagram" iconClassName="text-pink-500 dark:text-pink-400" whiteText={whiteText} />
-              <SocialIcon Icon={Twitter} label="Twitter" iconClassName="text-slate-900 dark:text-slate-100" whiteText={whiteText} />
+              <SocialIcon Icon={Facebook} label="Facebook" iconClassName="text-blue-500 dark:text-blue-400" />
+              <SocialIcon Icon={Instagram} label="Instagram" iconClassName="text-pink-500 dark:text-pink-400" />
+              <SocialIcon
+                Icon={Twitter}
+                label="Twitter"
+                iconClassName={whiteText ? "text-white" : "text-sky-600 dark:text-sky-300"}
+              />
             </div>
           </div>
 
@@ -509,9 +513,13 @@ export function GlassNavbar({ activeHref, className, whiteText, variant = "defau
                   Contact
                 </a>
                 <div className="flex items-center gap-1.5">
-                  <SocialIcon Icon={Facebook} label="Facebook" iconClassName="text-blue-500 dark:text-blue-400" whiteText={whiteText} />
-                  <SocialIcon Icon={Instagram} label="Instagram" iconClassName="text-pink-500 dark:text-pink-400" whiteText={whiteText} />
-                  <SocialIcon Icon={Twitter} label="Twitter" iconClassName="text-slate-900 dark:text-slate-100" whiteText={whiteText} />
+                  <SocialIcon Icon={Facebook} label="Facebook" iconClassName="text-blue-500 dark:text-blue-400" />
+                  <SocialIcon Icon={Instagram} label="Instagram" iconClassName="text-pink-500 dark:text-pink-400" />
+                  <SocialIcon
+                    Icon={Twitter}
+                    label="Twitter"
+                    iconClassName={whiteText ? "text-white" : "text-sky-600 dark:text-sky-300"}
+                  />
                 </div>
               </div>
             </div>
@@ -526,22 +534,25 @@ type SocialIconProps = {
   Icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
   label: string;
   iconClassName?: string;
-  whiteText?: boolean;
 };
 
-function SocialIcon({ Icon, label, iconClassName, whiteText }: SocialIconProps) {
+function SocialIcon({ Icon, label, iconClassName }: SocialIconProps) {
   return (
     <button
       type="button"
       aria-label={label}
       className={cn(
-        "inline-flex h-6 w-6 items-center justify-center rounded-full text-[0.7rem] sm:h-7 sm:w-7",
-        "bg-background/75 text-foreground/80 shadow-md backdrop-blur-2xl",
-        "dark:bg-background/45 dark:text-foreground/80",
-        "transition-transform transition-colors hover:-translate-y-0.5 hover:text-foreground hover:bg-background/90"
+        "inline-flex h-6 w-6 items-center justify-center rounded-full sm:h-7 sm:w-7",
+        "bg-background/75 shadow-md backdrop-blur-2xl dark:bg-background/45",
+        "transition-transform hover:-translate-y-0.5 hover:bg-background/90"
       )}
     >
-      <Icon className={cn("h-3.5 w-3.5 sm:h-4 sm:w-4", iconClassName)} />
+      <Icon
+        className={cn(
+          "h-3.5 w-3.5 shrink-0 stroke-[1.75] sm:h-4 sm:w-4",
+          iconClassName ?? "text-foreground/85 dark:text-foreground/80"
+        )}
+      />
     </button>
   );
 }

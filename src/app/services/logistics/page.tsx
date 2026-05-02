@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import { CheckCircle2, Network, Truck } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { GlassNavbar } from "@/components/ui/glass-navbar";
+import { MarketingFooter } from "@/components/ui/marketing-footer";
 
 const headingFont = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -500,6 +501,8 @@ export default function LogisticsPage() {
           </div>
         </div>
       </section>
+
+      <MarketingFooter />
 
       {isModalOpen && (
         <div className="fixed inset-0 z-[80] flex items-center justify-center bg-black/70 px-4">

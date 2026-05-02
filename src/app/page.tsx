@@ -6,6 +6,7 @@ import { OurServicesSection } from "@/components/ui/services-section";
 import { WhyChooseUsSection } from "@/components/ui/why-choose-us-section";
 import { TestimonialsSection } from "@/components/ui/testimonials-section";
 import { ContactSection } from "@/components/ui/contact-section";
+import { MarketingFooter } from "@/components/ui/marketing-footer";
 import { ArrowRight, BadgeCheck, Clock3, Factory, MapPinned, ShieldCheck, Sparkles } from "lucide-react";
 
 const proofPoints = [
@@ -64,7 +65,7 @@ export default function Home() {
         Skip to content
       </a>
 
-      <GlassNavbar activeHref="/" variant="home" />
+      <GlassNavbar activeHref="/" />
 
       <main id="main-content" className="relative isolate overflow-hidden">
         <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[460px] bg-gradient-to-b from-blue-100/45 via-transparent to-transparent" />
@@ -95,7 +96,7 @@ export default function Home() {
         <FinalCallout />
       </main>
 
-      <SiteFooter />
+      <MarketingFooter />
     </AnimatedGradientBackground>
   );
 }
@@ -225,13 +226,3 @@ function FinalCallout() {
   );
 }
 
-function SiteFooter() {
-  return (
-    <footer className="border-t border-slate-200/70 bg-white/45 px-4 py-8 backdrop-blur-xl sm:px-6">
-      <div className="mx-auto flex max-w-6xl flex-col gap-3 text-sm text-slate-600 sm:flex-row sm:items-center sm:justify-between">
-        <p className="font-semibold text-slate-900">Business Growth Services</p>
-        <p>Logistics, real estate, and SaaS growth systems for modern businesses.</p>
-      </div>
-    </footer>
-  );
-}

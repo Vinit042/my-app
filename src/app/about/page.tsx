@@ -8,6 +8,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { AnimatedGradientBackground } from "@/components/ui/animated-gradient-background";
 import { GlassNavbar } from "@/components/ui/glass-navbar";
+import { MarketingFooter } from "@/components/ui/marketing-footer";
 import { cn } from "@/lib/utils";
 
 if (typeof window !== "undefined") {
@@ -29,8 +30,9 @@ export default function AboutPage() {
         <GoalsSection />
         <HowWeWorkSection />
         <OurJourneySection />
-        <TeamSection />
+        {/* <TeamSection /> */}
       </main>
+      <MarketingFooter />
     </AnimatedGradientBackground>
   );
 }
