@@ -24,6 +24,20 @@ const labelFont = Space_Grotesk({
   weight: ["500", "600", "700"],
 });
 
+/** DD/MM/YYYY hh:mm am/pm (12-hour, lowercase am/pm) */
+function formatSubmissionTimestamp(date = new Date()): string {
+  const day = date.getDate().toString().padStart(2, "0");
+  const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  const year = date.getFullYear();
+  const minutes = date.getMinutes().toString().padStart(2, "0");
+  let h24 = date.getHours();
+  const ampm = h24 >= 12 ? "pm" : "am";
+  let h12 = h24 % 12;
+  if (h12 === 0) h12 = 12;
+  const hours = h12.toString().padStart(2, "0");
+  return `${day}/${month}/${year} ${hours}:${minutes} ${ampm}`;
+}
+
 const partnerLogos = [
   {
     name: "EKART",
@@ -109,6 +123,8 @@ const structureCards = [
   {
     tier: "Basic Tier",
     title: "One Pincode",
+    /** Must match Google Form “Opportunity” options (same as contact form). */
+    formOpportunity: "One Pincode Franchise",
     coverage: "Single Local Area",
     volume: "350",
     commission: "₹18–₹24 / p",
@@ -118,6 +134,7 @@ const structureCards = [
   {
     tier: "Expansion Tier",
     title: "Master Franchise",
+    formOpportunity: "Master Franchise (3 Pincodes)",
     coverage: "3 Pincodes Coverage",
     volume: "1000",
     commission: "₹20–₹24 / p",
@@ -127,6 +144,7 @@ const structureCards = [
   {
     tier: "Premium Tier",
     title: "Mini District",
+    formOpportunity: "Mini District Franchise (5 Pincodes)",
     coverage: "5 Pincodes Coverage",
     volume: "1600",
     commission: "₹22–₹26 / p",
@@ -136,6 +154,7 @@ const structureCards = [
   {
     tier: "Ultimate Tier",
     title: "District Model",
+    formOpportunity: "District Model Franchise (10 Pincodes)",
     coverage: "10 Pincodes Coverage",
     volume: "3500",
     commission: "₹26–₹28 / p",
@@ -163,22 +182,98 @@ const howItWorksSteps = [
   },
 ];
 
+const LOGISTICS_SERVICE = "Logistics";
+
 export default function LogisticsPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [modalOpportunity, setModalOpportunity] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [contact, setContact] = useState("");
+  const [address, setAddress] = useState("");
+  const [stateField, setStateField] = useState("");
+  const [city, setCity] = useState("");
+  const [pincode, setPincode] = useState("");
+  const [message, setMessage] = useState("");
+  const [honeypot, setHoneypot] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
-  const openModal = () => {
+  const resetModalFields = () => {
+    setName("");
+    setEmail("");
+    setContact("");
+    setAddress("");
+    setStateField("");
+    setCity("");
+    setPincode("");
+    setMessage("");
+    setHoneypot("");
+    setSubmitError(null);
+  };
+
+  const openModal = (opportunity: string) => {
+    setModalOpportunity(opportunity);
     setIsSubmitted(false);
+    setSubmitError(null);
     setIsModalOpen(true);
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
+    setIsSubmitted(false);
+    resetModalFields();
   };
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setIsSubmitted(true);
+    if (!modalOpportunity) {
+      setSubmitError("Missing opportunity context. Please open the form from an Apply button.");
+      return;
+    }
+    setIsSubmitting(true);
+    setSubmitError(null);
+    try {
+      const formData = new URLSearchParams();
+      formData.append("Timestamp", formatSubmissionTimestamp());
+      formData.append("Name", name);
+      formData.append("Email", email);
+      formData.append("Contact", contact);
+      formData.append("State", stateField);
+      formData.append("City", city);
+      formData.append("Pincode", pincode);
+      formData.append("Address", address);
+      formData.append("Service", LOGISTICS_SERVICE);
+      formData.append("Opportunity", modalOpportunity);
+      formData.append("Message", message);
+      formData.append("token","w9Xf2@Lk7Pq!8sTz#4VnR6mY$1aC0dE3"!);
+      formData.append("website", "");
+
+      const res = await fetch("https://script.google.com/macros/s/AKfycbxtc-W7sh1KG-p9Myz9T3VPOmzbb-sqwF7Jd97L9np6GGOqSpMhQbLAl8lGLDZMdxgwHQ/exec", {
+        method: "POST",
+        body: formData,
+      });
+
+      const text = await res.text();
+      let json: { result?: string; message?: string } = {};
+      try {
+        json = JSON.parse(text) as { result?: string; message?: string };
+      } catch {
+        setSubmitError("Unexpected response from server.");
+        return;
+      }
+      if (json.result === "success") {
+        setIsSubmitted(true);
+        resetModalFields();
+      } else {
+        setSubmitError(json.message ?? json.result ?? "Submission failed. Try again.");
+      }
+    } catch {
+      setSubmitError("Network error. Check your connection and try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -260,7 +355,7 @@ export default function LogisticsPage() {
               >
                 <button
                   type="button"
-                  onClick={openModal}
+                  onClick={() => openModal(" ")}
                   className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-orange-500 to-orange-600 px-8 py-4 text-sm font-semibold text-white shadow-lg shadow-orange-500/30 transition-all duration-300 hover:scale-105 hover:from-orange-400 hover:to-orange-500"
                 >
                   Start Earning Today
@@ -354,7 +449,7 @@ export default function LogisticsPage() {
                 </ul>
                 <button
                   type="button"
-                  onClick={openModal}
+                  onClick={() => openModal(card.title === "Mini Hub" ? "Min Hub" : "Booking Point")}
                   className="mt-8 w-full rounded-xl bg-white/10 px-5 py-3 text-sm font-semibold text-white transition-all duration-300 hover:scale-[1.01] hover:bg-orange-500 hover:shadow-[0_0_22px_rgba(249,115,22,0.35)]"
                 >
                   Apply Now
@@ -412,7 +507,7 @@ export default function LogisticsPage() {
                 </div>
                 <button
                   type="button"
-                  onClick={openModal}
+                  onClick={() => openModal(`${card.title} Franchise`)}
                   className="mt-6 w-full rounded-xl bg-white/10 px-5 py-3 text-sm font-semibold text-white transition-all duration-300 hover:scale-[1.01] hover:bg-orange-500"
                 >
                   Select Plan
@@ -463,7 +558,7 @@ export default function LogisticsPage() {
                 </div>
                 <button
                   type="button"
-                  onClick={openModal}
+                  onClick={() => openModal(item.formOpportunity)}
                   className="mt-6 w-full rounded-xl bg-white/10 px-4 py-3 text-sm font-semibold text-white transition-all duration-300 hover:scale-[1.01] hover:bg-orange-500"
                 >
                   Apply Now
@@ -519,6 +614,18 @@ export default function LogisticsPage() {
             <p className="mt-2 text-sm leading-relaxed text-gray-300">
               Complete the form and our team will call you back shortly.
             </p>
+            {modalOpportunity ? (
+              <p className="mt-2 text-xs text-orange-300/90">
+                <span className="text-white/50">Opportunity: </span>
+                {modalOpportunity}
+                <span className="text-white/40"> · Service: {LOGISTICS_SERVICE}</span>
+              </p>
+            ) : null}
+            {submitError ? (
+              <p className="mt-3 rounded-lg border border-red-500/40 bg-red-500/10 px-3 py-2 text-sm text-red-200" role="alert">
+                {submitError}
+              </p>
+            ) : null}
             <form className="mt-6 grid gap-3 sm:gap-4" onSubmit={handleSubmit}>
               <input
                 required
@@ -526,7 +633,10 @@ export default function LogisticsPage() {
                 type="text"
                 autoComplete="name"
                 placeholder="Name"
-                className="min-h-[44px] w-full rounded-xl border border-white/10 bg-[#282a2b] px-3.5 py-2.5 text-sm text-white shadow-inner shadow-black/20 placeholder:text-gray-400 outline-none ring-orange-400/0 transition-all focus:border-orange-400/70 focus:ring-2 focus:ring-orange-400/25"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                disabled={isSubmitting || isSubmitted}
+                className="min-h-[44px] w-full rounded-xl border border-white/10 bg-[#282a2b] px-3.5 py-2.5 text-sm text-white shadow-inner shadow-black/20 placeholder:text-gray-400 outline-none ring-orange-400/0 transition-all focus:border-orange-400/70 focus:ring-2 focus:ring-orange-400/25 disabled:opacity-50"
               />
               <div className="grid grid-cols-2 gap-2 sm:gap-4">
                 <input
@@ -535,7 +645,10 @@ export default function LogisticsPage() {
                   type="tel"
                   autoComplete="tel"
                   placeholder="Contact No."
-                  className="min-h-[44px] min-w-0 w-full rounded-xl border border-white/10 bg-[#282a2b] px-2 py-2.5 text-sm text-white shadow-inner shadow-black/20 placeholder:text-gray-400 outline-none ring-orange-400/0 transition-all focus:border-orange-400/70 focus:ring-2 focus:ring-orange-400/25 sm:px-3.5"
+                  value={contact}
+                  onChange={(e) => setContact(e.target.value)}
+                  disabled={isSubmitting || isSubmitted}
+                  className="min-h-[44px] min-w-0 w-full rounded-xl border border-white/10 bg-[#282a2b] px-2 py-2.5 text-sm text-white shadow-inner shadow-black/20 placeholder:text-gray-400 outline-none ring-orange-400/0 transition-all focus:border-orange-400/70 focus:ring-2 focus:ring-orange-400/25 sm:px-3.5 disabled:opacity-50"
                 />
                 <input
                   required
@@ -543,7 +656,10 @@ export default function LogisticsPage() {
                   type="email"
                   autoComplete="email"
                   placeholder="Email"
-                  className="min-h-[44px] min-w-0 w-full rounded-xl border border-white/10 bg-[#282a2b] px-2 py-2.5 text-sm text-white shadow-inner shadow-black/20 placeholder:text-gray-400 outline-none ring-orange-400/0 transition-all focus:border-orange-400/70 focus:ring-2 focus:ring-orange-400/25 sm:px-3.5"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  disabled={isSubmitting || isSubmitted}
+                  className="min-h-[44px] min-w-0 w-full rounded-xl border border-white/10 bg-[#282a2b] px-2 py-2.5 text-sm text-white shadow-inner shadow-black/20 placeholder:text-gray-400 outline-none ring-orange-400/0 transition-all focus:border-orange-400/70 focus:ring-2 focus:ring-orange-400/25 sm:px-3.5 disabled:opacity-50"
                 />
               </div>
               <textarea
@@ -552,7 +668,10 @@ export default function LogisticsPage() {
                 autoComplete="street-address"
                 rows={3}
                 placeholder="Address"
-                className="min-h-[88px] w-full resize-y rounded-xl border border-white/10 bg-[#282a2b] px-3.5 py-2.5 text-sm text-white shadow-inner shadow-black/20 placeholder:text-gray-400 outline-none ring-orange-400/0 transition-all focus:border-orange-400/70 focus:ring-2 focus:ring-orange-400/25"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                disabled={isSubmitting || isSubmitted}
+                className="min-h-[88px] w-full resize-y rounded-xl border border-white/10 bg-[#282a2b] px-3.5 py-2.5 text-sm text-white shadow-inner shadow-black/20 placeholder:text-gray-400 outline-none ring-orange-400/0 transition-all focus:border-orange-400/70 focus:ring-2 focus:ring-orange-400/25 disabled:opacity-50"
               />
               <div className="grid grid-cols-3 gap-2 sm:gap-4">
                 <input
@@ -561,7 +680,10 @@ export default function LogisticsPage() {
                   type="text"
                   autoComplete="address-level1"
                   placeholder="State"
-                  className="min-h-[44px] min-w-0 w-full rounded-xl border border-white/10 bg-[#282a2b] px-2 py-2.5 text-sm text-white shadow-inner shadow-black/20 placeholder:text-gray-400 outline-none ring-orange-400/0 transition-all focus:border-orange-400/70 focus:ring-2 focus:ring-orange-400/25 sm:px-3.5"
+                  value={stateField}
+                  onChange={(e) => setStateField(e.target.value)}
+                  disabled={isSubmitting || isSubmitted}
+                  className="min-h-[44px] min-w-0 w-full rounded-xl border border-white/10 bg-[#282a2b] px-2 py-2.5 text-sm text-white shadow-inner shadow-black/20 placeholder:text-gray-400 outline-none ring-orange-400/0 transition-all focus:border-orange-400/70 focus:ring-2 focus:ring-orange-400/25 sm:px-3.5 disabled:opacity-50"
                 />
                 <input
                   required
@@ -569,7 +691,10 @@ export default function LogisticsPage() {
                   type="text"
                   autoComplete="address-level2"
                   placeholder="City"
-                  className="min-h-[44px] min-w-0 w-full rounded-xl border border-white/10 bg-[#282a2b] px-2 py-2.5 text-sm text-white shadow-inner shadow-black/20 placeholder:text-gray-400 outline-none ring-orange-400/0 transition-all focus:border-orange-400/70 focus:ring-2 focus:ring-orange-400/25 sm:px-3.5"
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
+                  disabled={isSubmitting || isSubmitted}
+                  className="min-h-[44px] min-w-0 w-full rounded-xl border border-white/10 bg-[#282a2b] px-2 py-2.5 text-sm text-white shadow-inner shadow-black/20 placeholder:text-gray-400 outline-none ring-orange-400/0 transition-all focus:border-orange-400/70 focus:ring-2 focus:ring-orange-400/25 sm:px-3.5 disabled:opacity-50"
                 />
                 <input
                   required
@@ -581,23 +706,44 @@ export default function LogisticsPage() {
                   pattern="[0-9]{6}"
                   maxLength={6}
                   title="Enter a 6-digit pincode"
-                  className="min-h-[44px] min-w-0 w-full rounded-xl border border-white/10 bg-[#282a2b] px-2 py-2.5 text-sm text-white shadow-inner shadow-black/20 placeholder:text-gray-400 outline-none ring-orange-400/0 transition-all focus:border-orange-400/70 focus:ring-2 focus:ring-orange-400/25 sm:px-3.5"
+                  value={pincode}
+                  onChange={(e) => setPincode(e.target.value)}
+                  disabled={isSubmitting || isSubmitted}
+                  className="min-h-[44px] min-w-0 w-full rounded-xl border border-white/10 bg-[#282a2b] px-2 py-2.5 text-sm text-white shadow-inner shadow-black/20 placeholder:text-gray-400 outline-none ring-orange-400/0 transition-all focus:border-orange-400/70 focus:ring-2 focus:ring-orange-400/25 sm:px-3.5 disabled:opacity-50"
                 />
               </div>
               <textarea
                 name="message"
                 rows={3}
                 placeholder="Message (optional)"
-                className="min-h-[88px] w-full resize-y rounded-xl border border-white/10 bg-[#282a2b] px-3.5 py-2.5 text-sm text-white shadow-inner shadow-black/20 placeholder:text-gray-400 outline-none ring-orange-400/0 transition-all focus:border-orange-400/70 focus:ring-2 focus:ring-orange-400/25"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                disabled={isSubmitting || isSubmitted}
+                className="min-h-[88px] w-full resize-y rounded-xl border border-white/10 bg-[#282a2b] px-3.5 py-2.5 text-sm text-white shadow-inner shadow-black/20 placeholder:text-gray-400 outline-none ring-orange-400/0 transition-all focus:border-orange-400/70 focus:ring-2 focus:ring-orange-400/25 disabled:opacity-50"
+              />
+              <input
+                type="text"
+                name="website"
+                value={honeypot}
+                onChange={(e) => setHoneypot(e.target.value)}
+                tabIndex={-1}
+                autoComplete="off"
+                className="hidden"
+                aria-hidden
               />
               <button
                 type="submit"
+                disabled={isSubmitting || isSubmitted}
                 className={cn(
                   labelFont.className,
-                  "mt-1 min-h-[48px] w-full rounded-xl bg-orange-500 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-orange-500/20 transition-all duration-300 hover:bg-orange-400 hover:shadow-orange-500/30 active:scale-[0.99]"
+                  "mt-1 min-h-[48px] w-full rounded-xl bg-orange-500 px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-orange-500/20 transition-all duration-300 hover:bg-orange-400 hover:shadow-orange-500/30 active:scale-[0.99] disabled:pointer-events-none disabled:opacity-60"
                 )}
               >
-                {isSubmitted ? "Application Submitted!" : "Submit Application"}
+                {isSubmitted
+                  ? "Application Submitted!"
+                  : isSubmitting
+                    ? "Submitting…"
+                    : "Submit Application"}
               </button>
             </form>
           </div>
