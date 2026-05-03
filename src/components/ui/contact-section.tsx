@@ -10,8 +10,11 @@ const headingFont = Lora({
   weight: ["500", "600", "700"],
 });
 
+const labelClass =
+  "text-xs font-medium text-black bg-white rounded px-1.5 py-0.5 inline-block";
+
 const fieldBase =
-  "w-full rounded-lg border border-slate-200 bg-white/80 px-3.5 py-2.5 text-sm text-slate-900 shadow-sm outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-400/40 placeholder:text-slate-400 dark:border-slate-700 dark:bg-slate-900/70 dark:text-slate-50";
+  "w-full rounded-lg border border-slate-200 bg-white px-3.5 py-2.5 text-sm text-black shadow-sm outline-none transition focus:border-blue-500 focus:ring-2 focus:ring-blue-400/40 placeholder:text-slate-400";
 
   /** DD/MM/YYYY hh:mm am/pm (12-hour, lowercase am/pm) */
 function formatSubmissionTimestamp(date = new Date()): string {
@@ -120,46 +123,46 @@ export function ContactSection() {
       >
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div className="space-y-1.5">
-            <label className="text-xs font-medium text-slate-700 dark:text-slate-200">
+            <label className={labelClass}>
               Name<span className="text-red-500">*</span>
             </label>
             <input type="text" required placeholder="Name*" className={fieldBase} value={name} onChange={(e) => setName(e.target.value)} />
           </div>
           <div className="space-y-1.5">
-            <label className="text-xs font-medium text-slate-700 dark:text-slate-200">
+            <label className={labelClass}>
               Email<span className="text-red-500">*</span>
             </label>
             <input type="email" required placeholder="Email*" className={fieldBase} value={email} onChange={(e) => setEmail(e.target.value)} />
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-xs font-medium text-slate-700 dark:text-slate-200">
+            <label className={labelClass}>
               Contact No.<span className="text-red-500">*</span>
             </label>
             <input type="tel" required placeholder="Contact No.*" className={fieldBase} value={contact} onChange={(e) => setContact(e.target.value)} />
           </div>
           <div className="space-y-1.5">
-            <label className="text-xs font-medium text-slate-700 dark:text-slate-200">
+            <label className={labelClass}>
               State<span className="text-red-500">*</span>
             </label>
             <input type="text" required placeholder="State*" className={fieldBase} value={state} onChange={(e) => setState(e.target.value)} />
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-xs font-medium text-slate-700 dark:text-slate-200">
+            <label className={labelClass}>
               City<span className="text-red-500">*</span>
             </label>
             <input type="text" required placeholder="City*" className={fieldBase} value={city} onChange={(e) => setCity(e.target.value)} />
           </div>
           <div className="space-y-1.5">
-            <label className="text-xs font-medium text-slate-700 dark:text-slate-200">
+            <label className={labelClass}>
               Pincode<span className="text-red-500">*</span>
             </label>
             <input type="text" required placeholder="Pincode*" className={fieldBase} value={pincode} onChange={(e) => setPincode(e.target.value)} />
           </div>
 
           <div className="space-y-1.5 md:col-span-2">
-            <label className="text-xs font-medium text-slate-700 dark:text-slate-200">
+            <label className={labelClass}>
               Address<span className="text-red-500">*</span>
             </label>
             <textarea
@@ -175,7 +178,7 @@ export function ContactSection() {
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-xs font-medium text-slate-700 dark:text-slate-200">
+            <label className={labelClass}>
               Select Service<span className="text-red-500">*</span>
             </label>
             <select required className={cn(fieldBase, "appearance-none")} value={service} onChange={(e) => setService(e.target.value)}>
@@ -184,7 +187,7 @@ export function ContactSection() {
             </select>
           </div>
           <div className="space-y-1.5">
-            <label className="text-xs font-medium text-slate-700 dark:text-slate-200">
+            <label className={labelClass}>
               Select Opportunity<span className="text-red-500">*</span>
             </label>
             <select required className={cn(fieldBase, "appearance-none")} value={opportunity} onChange={(e) => setOpportunity(e.target.value)}>
@@ -203,7 +206,7 @@ export function ContactSection() {
         </div>
 
         <div className="mt-4 space-y-1.5">
-          <label className="text-xs font-medium text-slate-700 dark:text-slate-200">
+          <label className={labelClass}>
             Message
           </label>
           <textarea
