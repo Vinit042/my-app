@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { motion } from "framer-motion";
 import { ArrowRight, Globe2, Headphones, Play, ShieldCheck, TrendingUp } from "lucide-react";
@@ -101,8 +102,8 @@ function StaticContent() {
         transition={{ duration: 0.5, delay: 0.5 }}
         className="flex flex-wrap items-center gap-3 pt-2"
       >
-        <a
-          href="#contact"
+        <Link
+          href="/services/logistics"
           className={cn(
             "group inline-flex items-center gap-2 rounded-xl px-7 py-3 text-sm font-semibold sm:text-base",
             headingFont.className,
@@ -112,7 +113,7 @@ function StaticContent() {
         >
           Get Free Consultation
           <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-        </a>
+        </Link>
 
         <a
           href="#services"

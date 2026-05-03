@@ -2,6 +2,7 @@
 
 import { Lora } from "next/font/google";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { cn } from "@/lib/utils";
 
 const brandFont = Lora({
@@ -13,6 +14,8 @@ const TRANSITION: any = {
   duration: 0.45,
   ease: "easeOut",
 };
+
+const MotionLink = motion(Link);
 
 export function WhoWeAreSection() {
   return (
@@ -72,8 +75,8 @@ export function WhoWeAreSection() {
         </motion.div>
 
         {/* CTA */}
-        <motion.a
-          href="#contact"
+        <MotionLink
+          href="/services/logistics"
           initial={{ opacity: 0, y: 14 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -83,7 +86,7 @@ export function WhoWeAreSection() {
           className="ds-btn-primary mt-4 rounded-xl bg-gradient-to-r from-[#0057ff] to-[#3b82f6] px-12 py-4 text-base font-semibold text-white shadow-xl shadow-[#0057ff]/30 transition-all hover:shadow-2xl hover:shadow-[#3b82f6]/35 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 md:text-lg"
         >
           Get Free Consultation
-        </motion.a>
+        </MotionLink>
       </div>
     </section>
   );

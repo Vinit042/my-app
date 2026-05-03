@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { AnimatedGradientBackground } from "@/components/ui/animated-gradient-background";
 import { GlassNavbar } from "@/components/ui/glass-navbar";
 import { HeroSection } from "@/components/ui/hero-section";
@@ -214,13 +215,13 @@ function FinalCallout() {
           </p>
         </div>
 
-        <a
-          href="#contact"
+        <Link
+          href="/services/logistics"
           className="ds-btn-primary inline-flex items-center justify-center gap-2 bg-slate-950 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-slate-950/20 transition-transform duration-300 hover:-translate-y-0.5"
         >
           Get Free Consultation
           <ArrowRight className="h-4 w-4" />
-        </a>
+        </Link>
       </div>
     </section>
   );
