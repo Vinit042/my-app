@@ -278,7 +278,7 @@ export default function LogisticsPage() {
 
   return (
     <div className={cn("relative min-h-screen bg-[#121414] text-white", bodyFont.className)}>
-      <GlassNavbar activeHref="/services/logistics" whiteText />
+      <GlassNavbar activeHref="/services/logistics/" whiteText />
 
       <section
         className="relative flex min-h-screen w-full items-center overflow-hidden bg-cover bg-center bg-no-repeat"

@@ -140,7 +140,7 @@ export function OurServicesSection() {
 
               <div className="mt-6 flex flex-wrap items-center gap-3 sm:mt-7">
                 <Link
-                  href="/services/logistics"
+                  href="/services/logistics/"
                   className="inline-flex items-center justify-center rounded-full bg-orange-500 px-6 py-2.5 text-xs font-semibold text-white shadow-lg shadow-orange-500/40 transition-transform duration-200 hover:-translate-y-0.5 hover:bg-orange-400 sm:px-7 sm:py-3 sm:text-sm"
                 >
                   Get Franchise

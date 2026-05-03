@@ -1,8 +1,10 @@
-/** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Add Next.js config options here if needed
+  output: 'export',
+  /** Folder-based pages (e.g. services/logistics/index.html) so /services/logistics/ works on Apache/shared hosts */
+  trailingSlash: true,
+  images: {
+    unoptimized: true,
+  },
 };
 
 export default nextConfig;
-
-

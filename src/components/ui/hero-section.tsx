@@ -103,7 +103,7 @@ function StaticContent() {
         className="flex flex-wrap items-center gap-3 pt-2"
       >
         <Link
-          href="/services/logistics"
+          href="/services/logistics/"
           className={cn(
             "group inline-flex items-center gap-2 rounded-xl px-7 py-3 text-sm font-semibold sm:text-base",
             headingFont.className,

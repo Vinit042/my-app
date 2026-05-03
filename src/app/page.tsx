@@ -216,7 +216,7 @@ function FinalCallout() {
         </div>
 
         <Link
-          href="/services/logistics"
+          href="/services/logistics/"
           className="ds-btn-primary inline-flex items-center justify-center gap-2 bg-slate-950 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-slate-950/20 transition-transform duration-300 hover:-translate-y-0.5"
         >
           Get Free Consultation

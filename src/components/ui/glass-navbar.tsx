@@ -30,18 +30,18 @@ type NavItem = {
 
 const NAV_ITEMS: NavItem[] = [
   { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
+  { label: "About", href: "/about/" },
   {
     label: "Services",
-    href: "/services",
+    href: "/services/",
     subItems: [
-      { label: "Logistics", href: "/services/logistics" },
-      { label: "Real Estate", href: "/services/real-estate" },
-      { label: "IT Sales", href: "/services/it-sales" },
+      { label: "Logistics", href: "/services/logistics/" },
+      { label: "Real Estate", href: "/services/real-estate/" },
+      { label: "IT Sales", href: "/services/it-sales/" },
     ],
   },
-  { label: "Careers", href: "/careers" },
-  { label: "Gallery", href: "/gallery" },
+  { label: "Careers", href: "/careers/" },
+  { label: "Gallery", href: "/gallery/" },
 ];
 
 export function GlassNavbar({ activeHref, className, whiteText, variant = "default" }: GlassNavbarProps) {
@@ -200,7 +200,7 @@ export function GlassNavbar({ activeHref, className, whiteText, variant = "defau
         )}
       >
         {/* Logo */}
-        <div className="flex min-w-0 items-center gap-2 pl-1.5 sm:pl-4">
+        <a href="/" className="flex min-w-0 items-center gap-2 pl-1.5 sm:pl-4">
           <div
             className={cn(
               "relative h-6 w-16 sm:h-7 sm:w-20 md:h-7 md:w-24",
@@ -210,13 +210,13 @@ export function GlassNavbar({ activeHref, className, whiteText, variant = "defau
             <Image
               src="/logo1.png"
               alt="BGS"
-              fill  
+              fill
               sizes="96px"
               className={logoClass}
               priority
             />
           </div>
-        </div>
+        </a>
 
         {/* Navigation links */}
         <ul

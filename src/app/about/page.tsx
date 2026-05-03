@@ -24,7 +24,7 @@ export default function AboutPage() {
   return (
     <AnimatedGradientBackground>
       <PageProgressBar />
-      <GlassNavbar activeHref="/about" />
+      <GlassNavbar activeHref="/about/" />
       <main className="w-full">
         <AboutHero />
         <GoalsSection />

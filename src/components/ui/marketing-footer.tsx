@@ -18,15 +18,15 @@ const ADDRESS =
   "A- 122, Building No 5, Mittal estate marol, andheri east 400059";
 
 const serviceLinks = [
-  { label: "Logistics", href: "/services/logistics" },
-  { label: "Real Estate", href: "/services/real-estate" },
-  { label: "IT Sales", href: "/services/it-sales" },
+  { label: "Logistics", href: "/services/logistics/" },
+  { label: "Real Estate", href: "/services/real-estate/" },
+  { label: "IT Sales", href: "/services/it-sales/" },
 ] as const;
 
 const companyLinks = [
-  { label: "About Us", href: "/about" },
-  { label: "Careers", href: "/careers" },
-  { label: "Gallery", href: "/gallery" },
+  { label: "About Us", href: "/about/" },
+  { label: "Careers", href: "/careers/" },
+  { label: "Gallery", href: "/gallery/" },
   { label: "Contact Us", href: "/#contact" },
 ] as const;
 
